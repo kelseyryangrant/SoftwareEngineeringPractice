@@ -25,6 +25,26 @@ class BankAccountTest {
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
         assertFalse( BankAccount.isEmailValid(""));
+
+        //valid use of several "." characters
+        assertTrue(BankAccount.isEmailValid("a.b.c@mail.com"));
+        //invalid use of several "." characters
+        assertFalse(BankAccount.isEmailValid("a.b..c@mail.com"));
+
+        //valid use of "-" character
+        assertTrue(BankAccount.isEmailValid("a-bc@mail.com"));
+        //invalid use of "-" character
+        assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
+
+        //valid use of numbers
+        assertTrue(BankAccount.isEmailValid("abc123@mail.org"));
+        //invalid use of numbers
+        assertFalse(BankAccount.isEmailValid("abc@123.123"));
+
+        //valid use of domain
+        assertTrue(BankAccount.isEmailValid("abc123@mail.cc"));
+        //invalid use of domain
+        assertFalse(BankAccount.isEmailValid("abc123@mail.2"));
     }
 
     @Test
