@@ -19,6 +19,21 @@ class BankAccountTest {
         bankAccount.withdraw(100);
 
         assertEquals(100, bankAccount.getBalance());
+
+        //overdraw account test
+        BankAccount bankAccount1 = new BankAccount("abc@mail.com", 10);
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount1.withdraw(40));
+
+        //overdraw account test
+        BankAccount bankAccount2 = new BankAccount("abcd@mail.com", -10);
+
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount2.withdraw(200));
+
+        //successful withdraw test
+        BankAccount bankAccount3 = new BankAccount("abcde@mail.com", 100);
+        bankAccount3.withdraw(20);
+
+        assertEquals(80, bankAccount.getBalance());
     }
 
     @Test

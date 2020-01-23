@@ -28,6 +28,8 @@ public class BankAccount {
 
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
+     * When the amount is negative and the user attempts to withdraw, throw an  exception
+     * and print "ERROR: You do not have enough funds to withdraw that amount".
      */
     public void withdraw (double amount)  {
         balance -= amount;
