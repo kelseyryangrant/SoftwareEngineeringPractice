@@ -48,13 +48,136 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse( BankAccount.isEmailValid(""));
+        assertTrue(BankAccount.isEmailValid( "abc@mail.com"));
+        assertFalse(BankAccount.isEmailValid(""));
 
-        // Equivalence Class: periods in prefix
-        // Border Case: Yes, 1 away from @ sign
-        //valid use of several "." characters
-        assertTrue(BankAccount.isEmailValid("a.b.c@mail.com"));
+        //@ tests
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: one @
+        assertFalse(BankAccount.isEmailValid("abcmail.com"));//border: no @
+        assertFalse(BankAccount.isEmailValid("abc@@mail.com"));//border: 2 @
+        assertFalse(BankAccount.isEmailValid("abc@@@mail.com"));
+
+        //P R E F I X
+
+        //".", "-", and "_" tests
+        assertTrue(BankAccount.isEmailValid("a.b.c@mail.com"));//border: one next to @ & second character
+        assertFalse(BankAccount.isEmailValid("a.bc.@mail.com"));//border: next to @
+        assertFalse(BankAccount.isEmailValid(".abc@mail.com"));//border: first character
+        assertTrue(BankAccount.isEmailValid("a.bc@mail.com"));//border: second character
+        assertFalse(BankAccount.isEmailValid("a..bc@mail.com"));//border: two next to each other
+        assertFalse(BankAccount.isEmailValid("a...bc@mail.com"));
+
+        assertTrue(BankAccount.isEmailValid("a-b-c@mail.com")); //border: one next to @ & second character
+        assertFalse(BankAccount.isEmailValid("a-bc-@mail.com"));//border: next to @
+        assertFalse(BankAccount.isEmailValid("-abc@mail.com"));//border: first character
+        assertTrue(BankAccount.isEmailValid("a-bc@mail.com"));//border: second character
+        assertFalse(BankAccount.isEmailValid("a--bc@mail.com"));//border: two next to each other
+        assertFalse(BankAccount.isEmailValid("a---bc@mail.com"));
+
+        assertTrue(BankAccount.isEmailValid("a_b_c@mail.com"));//border: one next to @ & second character
+        assertFalse(BankAccount.isEmailValid("a_bc_@mail.com"));//border: next to @
+        assertFalse(BankAccount.isEmailValid("_abc@mail.com"));//border: first character
+        assertTrue(BankAccount.isEmailValid("a_bc@mail.com"));//border: second character
+        assertFalse(BankAccount.isEmailValid("a__bc@mail.com"));//border: two next to eachother
+        assertFalse(BankAccount.isEmailValid("a___bc@mail.com"));
+
+        //disallowed special character tests
+        //SPECIAL CHARACTERS: !#$%&'*+/=?^{|}~
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab#c@mail.com"));//border: presence of 1 "#"
+        assertFalse(BankAccount.isEmailValid("ab##c@mail.com"));//two "#"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab!c@mail.com"));//border: presence of 1 "!"
+        assertFalse(BankAccount.isEmailValid("ab!!c@mail.com"));//two "!"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab$c@mail.com"));//border: presence of 1 "$"
+        assertFalse(BankAccount.isEmailValid("ab$$c@mail.com"));//two "$"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab%c@mail.com"));//border: presence of 1 "%"
+        assertFalse(BankAccount.isEmailValid("ab%%c@mail.com"));//two "%"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab&c@mail.com"));//border: presence of 1 "&"
+        assertFalse(BankAccount.isEmailValid("ab&&c@mail.com"));//two "&"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab'c@mail.com"));//border: presence of 1 "'"
+        assertFalse(BankAccount.isEmailValid("ab''c@mail.com"));//two "'"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab+c@mail.com"));//border: presence of 1 "+"
+        assertFalse(BankAccount.isEmailValid("ab++c@mail.com"));//two "+"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab/c@mail.com"));//border: presence of 1 "/"
+        assertFalse(BankAccount.isEmailValid("ab//c@mail.com"));//two "/"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab=c@mail.com"));//border: presence of 1 "="
+        assertFalse(BankAccount.isEmailValid("ab==c@mail.com"));//two "="
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab?c@mail.com"));//border: presence of 1 "?"
+        assertFalse(BankAccount.isEmailValid("ab??c@mail.com"));//two "?"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab^c@mail.com"));//border: presence of 1 "^"
+        assertFalse(BankAccount.isEmailValid("ab^^c@mail.com"));//two "^"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab{c@mail.com"));//border: presence of 1 "{"
+        assertFalse(BankAccount.isEmailValid("ab{{c@mail.com"));//two "{"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab}c@mail.com"));//border: presence of 1 "}"
+        assertFalse(BankAccount.isEmailValid("ab}}c@mail.com"));//two "}"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab|c@mail.com"));//border: presence of 1 "|"
+        assertFalse(BankAccount.isEmailValid("ab||c@mail.com"));//two "|"
+
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: no disallowed characters
+        assertFalse(BankAccount.isEmailValid("ab~c@mail.com"));//border: presence of 1 "~"
+        assertFalse(BankAccount.isEmailValid("ab~~c@mail.com"));//two "~"
+
+        //S U F F I X
+
+        //"." tests
+        assertTrue(BankAccount.isEmailValid("abc@mail.com"));//border: one period
+        assertFalse(BankAccount.isEmailValid("abc@mailcom"));//border: no period
+        assertFalse(BankAccount.isEmailValid("abc@mail..com"));//border: 2 periods
+        assertFalse(BankAccount.isEmailValid("abc@mail...com"));
+
+        assertFalse(BankAccount.isEmailValid("abc@.mailcom"));//border: first character
+        assertFalse(BankAccount.isEmailValid("abc@m.ailcom"));//border: second character
+        assertFalse(BankAccount.isEmailValid("abc@mailcom."));//border: last character
+        assertFalse(BankAccount.isEmailValid("abc@mail.c"));//border: second to last character
+
+        //disallowed special character tests
+        //SPECIAL CHARACTER TESTS: !#$%&'*+/=?^{|}~
+
+        assertTrue(BankAccount.isEmailValid("email@email.com"));//border: no special characters
+        assertFalse(BankAccount.isEmailValid("email@email!.com"));
+        assertFalse(BankAccount.isEmailValid("email@email#.com"));
+        assertFalse(BankAccount.isEmailValid("email@email$.com"));
+        assertFalse(BankAccount.isEmailValid("email@email%.com"));
+        assertFalse(BankAccount.isEmailValid("email@email&.com"));
+        assertFalse(BankAccount.isEmailValid("email@email'.com"));
+        assertFalse(BankAccount.isEmailValid("email@email*.com"));
+        assertFalse(BankAccount.isEmailValid("email@email+.com"));
+        assertFalse(BankAccount.isEmailValid("email@email=.com"));
+        assertFalse(BankAccount.isEmailValid("email@email?.com"));
+        assertFalse(BankAccount.isEmailValid("email@email^.com"));
+        assertFalse(BankAccount.isEmailValid("email@email{.com"));
+        assertFalse(BankAccount.isEmailValid("email@email|.com"));
+        assertFalse(BankAccount.isEmailValid("email@email}.com"));
+        assertFalse(BankAccount.isEmailValid("email@email~.com"));
+
+
 
         // Equivalence Class: periods in prefix
         // Border Case: Yes, . next to @
