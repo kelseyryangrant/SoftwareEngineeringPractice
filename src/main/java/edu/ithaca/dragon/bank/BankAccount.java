@@ -48,8 +48,8 @@ public class BankAccount {
 
     public static boolean isEmailValid(String email){
 
-        //no @ symbol, @ symbol first, @ symbol last
-        if (email.indexOf('@') == -1 || email.indexOf('@') == 0 || email.indexOf('@') == email.length()-1){
+        //no @ symbol, @ symbol first, @ symbol last, first char not letter or number
+        if (email.indexOf('@') == -1 || email.indexOf('@') == 0 || email.indexOf('@') == email.length()-1 || !"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".contains(String.valueOf(email.charAt(0)))){
             return false;
         }
         else {
@@ -72,6 +72,16 @@ public class BankAccount {
             int indexOfAt = index;
             index+=1;
             //part 2: post @ symbol
+            String domain = email.substring(index);
+            int periods = 0;
+            for(int i = 0; i < domain.length()-1; i++){
+                if(String.valueOf(domain.charAt(i)).equals(".")){
+                    periods += 1;
+                }
+            }
+            if (periods != 1){
+                return false;
+            }
             while (index != email.length()-1){
                 if(String.valueOf(email.charAt(index)).equals(".")){
                     //nothing between the @ and the dot.
