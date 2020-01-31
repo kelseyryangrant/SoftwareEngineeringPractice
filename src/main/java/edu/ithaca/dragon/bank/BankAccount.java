@@ -27,6 +27,21 @@ public class BankAccount {
     }
 
     /**
+     * @post takes double amount
+     * throws runtime exception is the amount is a negative integer with the line "ERROR: cannot withdraw
+     * negative amount". Also throws a runtime exception if the amount given has more than two decimal
+     * places that reads "ERROR: invalid amount". If neither of these are an issue, return true.
+     */
+
+    public static boolean isAmountValid(double amount){
+        if (amount <= 0){
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * When the amount is negative and the user attempts to withdraw, throw a Runtime exception
      * and print "ERROR: Your account is currently negative. No funds can be withdrawn.".
@@ -64,6 +79,7 @@ public class BankAccount {
                     }
                 }
                 //if the character is not a letter or number (aka a non-acceptable special character)
+                //!!
                 else if(!"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@".contains(String.valueOf(email.charAt(index)))){
                     return false;
                 }
