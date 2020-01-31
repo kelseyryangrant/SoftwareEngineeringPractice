@@ -4,17 +4,20 @@ public class BankAccount {
 
     private String email;
     private double balance;
+    private double amount;
 
     /**
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance){
-        if (isEmailValid(email)){
+        if (isEmailValid(email) && isAmountValid(amount)){
             this.email = email;
             this.balance = startingBalance;
+            this.amount = amount;
         }
+
         else {
-            throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
+            throw new IllegalArgumentException("ERROR: Invalid account information.");
         }
     }
 
@@ -62,13 +65,24 @@ public class BankAccount {
      * that amount."
      */
     public void withdraw (double amount)  {
-        if(amount < 0){
-            throw new RuntimeException("ERROR: Your account is currently negative. No funds can be withdrawn.");
-        }
+
+        String amountString = Double.toString(Math.abs(amount));
+        String[] splitter = amountString.toString().split("\\.");
+        splitter[0].length();   // Before Decimal Count
+        splitter[1].length();   // After  Decimal Count
+
+
+
         if(amount > balance){
             throw new RuntimeException("ERROR: You do not have enough funds to withdraw that amount.");
         }
-        balance -= amount;
+        else if (isAmountValid(amount)){
+            balance -= amount;
+        }
+        else{
+            throw new IllegalArgumentException("ERROR: Invalid withdraw amount");
+
+        }
 
     }
 
