@@ -116,6 +116,74 @@ class BankAccountTest {
     }
 
     @Test
+    void depositTest(){
+
+        BankAccount BankAccount = new BankAccount("a@b.com", 200);
+
+        //positive amounts
+        BankAccount.deposit(0.01); //border
+        assertEquals(200.01,BankAccount.getBalance());
+
+        BankAccount.deposit(0.10);
+        assertEquals(200.11, BankAccount.getBalance());
+
+        BankAccount.deposit(10.00);
+        assertEquals(210.11, BankAccount.getBalance());
+
+        BankAccount.deposit(10);
+        assertEquals(220.11, BankAccount.getBalance());
+
+
+        //negative and zero amounts
+
+        BankAccount BankAccount2 = new BankAccount("a@b.com", 100);
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount2.deposit(0.00)); //border
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount2.deposit(-0.01)); //border
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount2.deposit(-0.10));
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount2.deposit(-1.00));
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount2.deposit(-1));
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount2.deposit(-10));
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount2.deposit(-100));
+
+        //valid decimal point
+
+        BankAccount BankAccount3 = new BankAccount("a@b.com", 100);
+
+        BankAccount3.deposit(0.01);
+        assertEquals(100.01, BankAccount3.getBalance());
+
+        BankAccount3.deposit(0.1);
+        assertEquals(100.11, BankAccount3.getBalance());
+
+        BankAccount3.deposit(10);
+        assertEquals(110.11, BankAccount3.getBalance());
+
+        BankAccount3.deposit(0.100);
+        assertEquals(110.21, BankAccount3.getBalance());
+
+        BankAccount3.deposit(0.10000);
+        assertEquals(110.31, BankAccount3.getBalance());
+
+        BankAccount3.deposit(0.0100000000);
+        assertEquals(110.32, BankAccount3.getBalance());
+
+        BankAccount3.deposit(1);
+        assertEquals(111.11, BankAccount3.getBalance());
+
+
+        //non-valid decimal point
+
+        BankAccount BankAccount4 = new BankAccount("a@b.com", 100);
+
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount4.deposit(0.000)); //border
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount4.deposit(0.001)); //border
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount4.deposit(0.0001));
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount4.deposit(0.00001));
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount4.deposit(0.1234));
+
+    }
+
+    @Test
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "abc@mail.com"));
         assertFalse(BankAccount.isEmailValid(""));
