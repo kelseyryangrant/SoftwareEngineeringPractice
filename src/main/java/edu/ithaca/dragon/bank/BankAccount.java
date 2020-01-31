@@ -28,17 +28,29 @@ public class BankAccount {
 
     /**
      * @post takes double amount
-     * throws runtime exception is the amount is a negative integer with the line "ERROR: cannot withdraw
+     * throws runtime exception is the amount is a negative integer or 0 with the line "ERROR: cannot withdraw
      * negative amount". Also throws a runtime exception if the amount given has more than two decimal
      * places that reads "ERROR: invalid amount". If neither of these are an issue, return true.
      */
 
     public static boolean isAmountValid(double amount){
+
+        String amountString = Double.toString(Math.abs(amount));
+        String[] splitter = amountString.toString().split("\\.");
+        splitter[0].length();   // Before Decimal Count
+        splitter[1].length();   // After  Decimal Count
+
         if (amount <= 0){
             return false;
         }
 
-        return false;
+        else if(splitter[1].length() > 2){
+            return false;
+        }
+
+        else{
+            return true;
+        }
     }
 
     /**
