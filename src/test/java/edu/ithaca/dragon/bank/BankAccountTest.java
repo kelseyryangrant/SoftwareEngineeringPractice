@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,6 +12,34 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         assertEquals(200, bankAccount.getBalance());
+    }
+
+    @Test
+    void isAmountValidTest(){
+
+        //equivalence class: negative
+        assertFalse(BankAccount.isAmountValid(-0.01));
+        assertFalse(BankAccount.isAmountValid(-10.00));
+        assertFalse(BankAccount.isAmountValid(-0.10));
+
+        //equivalence class: positive
+        assertTrue(BankAccount.isAmountValid(0.01));
+        assertTrue(BankAccount.isAmountValid(0.00));
+        assertTrue(BankAccount.isAmountValid(0.10));
+        assertTrue(BankAccount.isAmountValid(10));
+
+        //equivalence class: valid decimal points
+        assertTrue(BankAccount.isAmountValid(10.00));
+        assertTrue(BankAccount.isAmountValid(10.000));
+        assertTrue(BankAccount.isAmountValid(10.1));
+        assertTrue(BankAccount.isAmountValid(10));
+
+        //equivalence class: non-valid decimal points
+        assertFalse(BankAccount.isAmountValid(10.001));
+        assertFalse(BankAccount.isAmountValid(10.0001));
+        assertFalse(BankAccount.isAmountValid(0.001));
+        assertFalse(BankAccount.isAmountValid(0.0000001));
+
     }
 
     @Test
