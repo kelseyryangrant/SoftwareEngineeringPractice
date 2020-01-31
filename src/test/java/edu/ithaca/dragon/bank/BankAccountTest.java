@@ -69,9 +69,50 @@ class BankAccountTest {
 
         assertEquals(80, bankAccount3.getBalance());
 
-        //missing:
-            //all border cases
-            //equivalence class of negative amount
+        //negative tests
+        BankAccount bankAccount4 = new BankAccount("abc@mail.com", 10);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-0.01));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-0.00));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-0.10));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-0.0001));
+
+        //positive tests
+        BankAccount bankAccount6 = new BankAccount("abc@mail.com", 1000);
+        bankAccount6.withdraw(0.01);
+        assertEquals(999.99, bankAccount6.getBalance());
+
+        bankAccount6.withdraw(0.10);
+        assertEquals(999.89, bankAccount6.getBalance());
+
+        bankAccount6.withdraw(10.00);
+        assertEquals(989.89, bankAccount6.getBalance());
+
+
+        //valid decimal points
+        BankAccount bankAccount5 = new BankAccount("abc@mail.com", 1000);
+        bankAccount5.withdraw(0.01);
+        assertEquals(999.99, bankAccount5.getBalance());
+
+        bankAccount5.withdraw(0.1);
+        assertEquals(999.89, bankAccount5.getBalance());
+
+        bankAccount5.withdraw(10.00);
+        assertEquals(989.89, bankAccount5.getBalance());
+
+        bankAccount5.withdraw(10.000);
+        assertEquals(979.89, bankAccount5.getBalance());
+
+        bankAccount5.withdraw(10);
+        assertEquals(969.89, bankAccount5.getBalance());
+
+        //non-valid decimal points
+        BankAccount bankAccount7 = new BankAccount("abc@mail.com", 10);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(0.001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(0.0001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(0.00001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(10.001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(0.0099));
     }
 
     @Test
@@ -254,6 +295,51 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+
+        //negative tests
+        BankAccount bankAccount4 = new BankAccount("abc@mail.com", 10);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-0.01));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-0.00));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-0.10));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-0.0001));
+
+        //positive tests
+        BankAccount bankAccount6 = new BankAccount("abc@mail.com", 1000);
+        bankAccount6.withdraw(0.01);
+        assertEquals(999.99, bankAccount6.getBalance());
+
+        bankAccount6.withdraw(0.10);
+        assertEquals(999.89, bankAccount6.getBalance());
+
+        bankAccount6.withdraw(10.00);
+        assertEquals(989.89, bankAccount6.getBalance());
+
+
+        //valid decimal points
+        BankAccount bankAccount5 = new BankAccount("abc@mail.com", 1000);
+        bankAccount5.withdraw(0.01);
+        assertEquals(999.99, bankAccount5.getBalance());
+
+        bankAccount5.withdraw(0.1);
+        assertEquals(999.89, bankAccount5.getBalance());
+
+        bankAccount5.withdraw(10.00);
+        assertEquals(989.89, bankAccount5.getBalance());
+
+        bankAccount5.withdraw(10.000);
+        assertEquals(979.89, bankAccount5.getBalance());
+
+        bankAccount5.withdraw(10);
+        assertEquals(969.89, bankAccount5.getBalance());
+
+        //non-valid decimal points
+        BankAccount bankAccount7 = new BankAccount("abc@mail.com", 10);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(0.001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(0.0001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(0.00001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(10.001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount7.withdraw(0.0099));
     }
 
 }
